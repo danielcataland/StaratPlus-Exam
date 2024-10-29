@@ -1,0 +1,144 @@
+openapi: 3.0.3
+info:
+  title: StratPlus API Swagger Exam
+  description: |-
+    Documentation for API tests and their respective methods and responses
+  contact:
+    email: daniel.acd9311@gmail.com
+  version: 1.0.0
+  
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: Login
+    description: Login main app
+  - name: Users
+    description: CRUD Operations
+paths:
+  /login:
+    post:
+      tags:
+        - Login
+      summary: Login
+      description: Login user in the app and returned a jwt token
+      operationId: login
+      requestBody:
+        description: Params needed in the request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginU'
+        required: true
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'          
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '500':
+          description: Server problem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+  /createuser:
+    post:
+      tags:
+        - Users
+      summary: Create user
+      description: Create user in app
+      operationId: createuser
+      requestBody:
+        description: Params needed in the request body
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginU'
+        required: true
+      responses:
+        '201':
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'          
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse400'
+        '500':
+          description: Server problem
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse500'
+  
+components:
+  schemas:
+    LoginU:
+      required:
+        - email
+        - password
+        - username
+        - phone
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+          example: Jhon1@
+        username:
+          type: string
+          example: JhonDoe
+        phone:
+          type: string
+          example: 1234567890
+    ApiResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+          example: 201
+        data:
+          type: string
+          example: ''
+        message:
+          type: string
+          example: Usuario creado
+    ApiResponse400:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+          example: 400
+        data:
+          type: string
+          example: ''
+        message:
+          type: string
+    ApiResponse500:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          format: int32
+          example: 500
+        data:
+          type: string
+          example: ''
+        message:
+          type: string
+          example: Internal server error
